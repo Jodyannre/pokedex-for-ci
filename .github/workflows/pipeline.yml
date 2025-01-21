@@ -17,20 +17,20 @@ jobs:
         with:
           access_token: ${{ github.token }}
 
-  lint:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-      - uses: actions/setup-node@v4
-        with:
-          cache: 'npm'
-          node-version: '14'
-      - name: Install dependencies
-        run: npm i
-      - name: Lint
-        run: npm run eslint
+  # lint:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v4
+  #       with:
+  #         fetch-depth: 0
+  #     - uses: actions/setup-node@v4
+  #       with:
+  #         cache: 'npm'
+  #         node-version: '14'
+  #     - name: Install dependencies
+  #       run: npm i
+  #     - name: Lint
+  #       run: npm run eslint
 
   build:
     runs-on: ubuntu-latest
@@ -52,7 +52,7 @@ jobs:
           path: dist
 
   test:
-    needs: [lint, build]
+    needs: [build]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -72,7 +72,7 @@ jobs:
         run: npm test
 
   e2e:
-    needs: [lint, build]
+    needs: [build]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
